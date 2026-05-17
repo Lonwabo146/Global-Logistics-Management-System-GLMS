@@ -1,0 +1,120 @@
+﻿@model GLMS.Models.Contract
+
+@{
+    ViewData["Title"] = "Edit Contract";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-dark">
+                <h5 class="mb-0">Edit Contract</h5>
+            </div>
+            <div class="card-body">
+                <form asp-action="Edit" enctype="multipart/form-data">
+                    <input type="hidden" asp-for="ContractId" />
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="alert alert-danger"></div>
+
+                    <div class="mb-3">
+                        <label asp-for="CustomerId"
+                               class="form-label fw-semibold"></label>
+                        <select asp-for="CustomerId"
+                                asp-items="ViewBag.Customers"
+                                class="form-select">
+                            <option value="">-- Select Customer --</option>
+                        </select>
+                        <span asp-validation-for="CustomerId"
+                              class="text-danger small"></span>
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="ServiceLevel"
+                               class="form-label fw-semibold"></label>
+                        <input asp-for="ServiceLevel" class="form-control" />
+                        <span asp-validation-for="ServiceLevel"
+                              class="text-danger small"></span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="StartDate"
+                                   class="form-label fw-semibold"></label>
+                            <input asp-for="StartDate"
+                                   type="date" class="form-control" />
+                            <span asp-validation-for="StartDate"
+                                  class="text-danger small"></span>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="EndDate"
+                                   class="form-label fw-semibold"></label>
+                            <input asp-for="EndDate"
+                                   type="date" class="form-control" />
+                            <span asp-validation-for="EndDate"
+                                  class="text-danger small"></span>
+                        </div>
+                    </div>
+
+                    
+                    <div class="mb-3">
+                        <label asp-for="Status"
+                               class="form-label fw-semibold"></label>
+                        <select asp-for="Status" class="form-select">
+                            @foreach (var s in Enum.GetValues(
+                                typeof(GLMS.Models.ContractStatus)))
+                            {
+                                <option value="@s">@s</option>
+                            }
+                        </select>
+                        <small class="text-muted">
+                            Changing status will trigger notifications
+                            and audit logs automatically.
+                        </small>
+                    </div>
+
+                    
+                    @if (Model.SignedAgreementPath != null)
+                    {
+                        <div class="mb-3 p-3 bg-light rounded border">
+                            <p class="mb-1 fw-semibold">
+                                Current Agreement:
+                            </p>
+                            <a asp-action="Download"
+                                   asp-route-id="@Model.ContractId"
+                                   class="btn btn-sm btn-outline-success">
+                                Download Current PDF
+                            </a>
+                        </div>
+                    }
+
+                   
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">
+                            Replace Agreement (PDF only)
+                        </label>
+                        <input type="file" name="pdfFile"
+                               class="form-control" accept=".pdf" />
+                        <div class="form-text">
+                            Leave empty to keep the existing file.
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-2">
+                        <button type="submit" class="btn btn-warning">
+                            Save Changes
+                        </button>
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

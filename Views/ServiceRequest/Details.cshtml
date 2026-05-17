@@ -1,0 +1,69 @@
+﻿@model GLMS.Models.ServiceRequest
+
+@{
+    ViewData["Title"] = "Request Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white
+                d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Service Request Details</h5>
+                <a asp-action="Index" class="btn btn-sm btn-light">← Back</a>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-4">Customer</dt>
+                    <dd class="col-sm-8">
+                        @Model.Contract?.Customer?.Name
+                    </dd>
+
+                    <dt class="col-sm-4">Contract</dt>
+                    <dd class="col-sm-8">
+                        @Model.Contract?.ServiceLevel
+                    </dd>
+
+                    <dt class="col-sm-4">Description</dt>
+                    <dd class="col-sm-8">@Model.Description</dd>
+
+                    <dt class="col-sm-4">Cost (USD)</dt>
+                    <dd class="col-sm-8">
+                        $@Model.CostUSD.ToString("N2")
+                    </dd>
+
+                    <dt class="col-sm-4">Cost (ZAR)</dt>
+                    <dd class="col-sm-8">
+                        R @Model.CostZAR.ToString("N2")
+                    </dd>
+
+                    <dt class="col-sm-4">Status</dt>
+                    <dd class="col-sm-8">
+                        <span class="badge @GetBadge(Model.Status)">
+                            @Model.Status
+                        </span>
+                    </dd>
+                </dl>
+
+                
+                <div class="alert alert-success mt-3">
+                    <strong>Currency Conversion:</strong>
+                    $@Model.CostUSD.ToString("N2") USD was automatically
+                    converted to R @Model.CostZAR.ToString("N2") ZAR
+                    using the live exchange rate at time of creation.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    string GetBadge(GLMS.Models.ServiceRequestStatus status) => status switch
+    {
+        GLMS.Models.ServiceRequestStatus.Pending => "bg-warning text-dark",
+        GLMS.Models.ServiceRequestStatus.InProgress => "bg-primary",
+        GLMS.Models.ServiceRequestStatus.Completed => "bg-success",
+        GLMS.Models.ServiceRequestStatus.Cancelled => "bg-danger",
+        _ => "bg-secondary"
+    };
+}

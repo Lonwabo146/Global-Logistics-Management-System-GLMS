@@ -1,0 +1,77 @@
+﻿@model GLMS.Models.Customer
+
+@{
+    ViewData["Title"] = "Customer Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-info text-white d-flex
+                justify-content-between align-items-center">
+                <h5 class="mb-0">@Model.Name</h5>
+                <a asp-action="Index" class="btn btn-sm btn-light">
+                    ← Back
+                </a>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Contact Details</dt>
+                    <dd class="col-sm-9">@Model.ContactDetails</dd>
+
+                    <dt class="col-sm-3">Region</dt>
+                    <dd class="col-sm-9">@Model.Region</dd>
+                </dl>
+            </div>
+        </div>
+
+        <h5 class="fw-bold mb-3">Contracts (@Model.Contracts.Count)</h5>
+
+        @if (Model.Contracts.Any())
+        {
+            <div class="card shadow-sm">
+                <div class="card-body p-0">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-secondary">
+                            <tr>
+                                <th>Service Level</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var contract in Model.Contracts)
+                            {
+                                <tr>
+                                    <td>@contract.ServiceLevel</td>
+                                    <td>@contract.StartDate.ToString("dd MMM yyyy")</td>
+                                    <td>@contract.EndDate.ToString("dd MMM yyyy")</td>
+                                    <td>
+                                        <span class="badge @GetStatusBadge(contract.Status)">
+                                            @contract.Status
+                                        </span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        }
+        else
+        {
+            <p class="text-muted">No contracts linked to this customer.</p>
+        }
+    </div>
+</div>
+
+@functions {
+    string GetStatusBadge(GLMS.Models.ContractStatus status) => status switch
+    {
+        GLMS.Models.ContractStatus.Active => "bg-success",
+        GLMS.Models.ContractStatus.Expired => "bg-danger",
+        GLMS.Models.ContractStatus.OnHold => "bg-warning text-dark",
+        _ => "bg-secondary"
+    };
+}

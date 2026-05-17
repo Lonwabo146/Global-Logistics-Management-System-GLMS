@@ -1,0 +1,78 @@
+﻿@model IEnumerable<GLMS.Models.ServiceRequest>
+
+@{
+    ViewData["Title"] = "Service Requests";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Service Requests</h2>
+    <a asp-action="Create" class="btn btn-primary">+ New Request</a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body p-0">
+        <table class="table table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Customer</th>
+                    <th>Contract</th>
+                    <th>Description</th>
+                    <th>Cost (USD)</th>
+                    <th>Cost (ZAR)</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model)
+                {
+                    <tr>
+                        <td class="fw-semibold">
+                            @request.Contract?.Customer?.Name
+                        </td>
+                        <td>@request.Contract?.ServiceLevel</td>
+                        <td>@request.Description</td>
+                        <td>$@request.CostUSD.ToString("N2")</td>
+                        <td>R @request.CostZAR.ToString("N2")</td>
+                        <td>
+                            <span class="badge @GetBadge(request.Status)">
+                                @request.Status
+                            </span>
+                        </td>
+                        <td>
+                            <a asp-action="Details"
+                               asp-route-id="@request.ServiceRequestId"
+                               class="btn btn-sm btn-outline-info">Details</a>
+                            <a asp-action="Edit"
+                               asp-route-id="@request.ServiceRequestId"
+                               class="btn btn-sm btn-outline-warning">Edit</a>
+                            <a asp-action="Delete"
+                               asp-route-id="@request.ServiceRequestId"
+                               class="btn btn-sm btn-outline-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+                @if (!Model.Any())
+                {
+                    <tr>
+                        <td colspan="7"
+                            class="text-center text-muted py-4">
+                            No service requests found.
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@functions {
+    string GetBadge(GLMS.Models.ServiceRequestStatus status) => status switch
+    {
+        GLMS.Models.ServiceRequestStatus.Pending => "bg-warning text-dark",
+        GLMS.Models.ServiceRequestStatus.InProgress => "bg-primary",
+        GLMS.Models.ServiceRequestStatus.Completed => "bg-success",
+        GLMS.Models.ServiceRequestStatus.Cancelled => "bg-danger",
+        _ => "bg-secondary"
+    };
+}
