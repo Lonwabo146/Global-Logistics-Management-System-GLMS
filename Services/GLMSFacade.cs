@@ -107,11 +107,9 @@ namespace GLMS.Services
             if (contract == null)
                 return (false, "Contract not found.");
 
-            if (contract.Status == ContractStatus.Expired ||
-                contract.Status == ContractStatus.OnHold)
+            if (contract.Status != ContractStatus.Active)
                 return (false,
                     $"Cannot raise a request against a {contract.Status} contract.");
-
             // Currency conversion
             try
             {
