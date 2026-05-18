@@ -16,6 +16,10 @@ namespace GLMS.Controllers
             return View();
         }
 
+        public IActionResult Contract() {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

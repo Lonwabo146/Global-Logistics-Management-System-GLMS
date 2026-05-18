@@ -1,0 +1,160 @@
+<style >
+.glms-wrap {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(145deg, #0d2a4a 0%, #0c1e36 60%, #1a3a5c 100%);
+    min-height: 100vh;
+    padding: 2.5rem 2rem 3rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.glms-wrap::before {
+    content: '';
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,140,0,0.1) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.glms-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.glms-brand-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+}
+
+.glms-brand-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.glms-tagline {
+    font-size: 13px;
+    color: rgba(255,165,0,0.85);
+    background: rgba(255,140,0,0.1);
+    border: 1px solid rgba(255,140,0,0.25);
+    border-radius: 20px;
+    padding: 4px 14px;
+    display: inline-block;
+    margin-bottom: 0.75rem;
+}
+
+.glms-hero-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.25;
+    margin-bottom: 0.5rem;
+}
+
+    .glms-hero-title span {
+        color: #FF8C00;
+    }
+
+.glms-hero-desc {
+    font-size: 15px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 2.5rem;
+}
+
+.glms-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+}
+
+.glms-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 16px;
+    padding: 1.5rem;
+    transition: background 0.2s, border-color 0.2s, transform 0.2s;
+}
+
+    .glms-card:hover {
+        background: rgba(255,255,255,0.1);
+        border-color: rgba(255,140,0,0.4);
+        transform: translateY(-3px);
+    }
+
+.glms-card-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    font-size: 22px;
+}
+
+.icon-customers {
+    background: rgba(30,130,220,0.2);
+    color: #5badff;
+}
+
+.icon-contracts {
+    background: rgba(255,140,0,0.2);
+    color: #ffaa44;
+}
+
+.icon-requests {
+    background: rgba(50,190,140,0.2);
+    color: #4ed9a8;
+}
+
+.glms-card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.4rem;
+}
+
+.glms-card-desc {
+    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+}
+
+.glms-card-btn {
+    display: inline-block;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.65);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 8px;
+    padding: 7px 14px;
+    text-decoration: none;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+}
+
+.glms-card:hover .glms-card-btn {
+    color: #FF8C00;
+    border-color: rgba(255,140,0,0.5);
+    background: rgba(255,140,0,0.08);
+}
+
+@@media (max-width: 768px) {
+    .glms-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .glms-hero-title {
+        font-size: 24px;
+    }
+}
+
+</style >
